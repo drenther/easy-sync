@@ -1,0 +1,91 @@
+{
+  "name": "@easy-sync/batching",
+  "version": "0.1.0",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./resolvers": {
+      "import": {
+        "types": "./dist/resolvers.d.ts",
+        "default": "./dist/resolvers.js"
+      },
+      "require": {
+        "types": "./dist/resolvers.d.ts",
+        "default": "./dist/resolvers.cjs"
+      }
+    },
+    "./schedulers": {
+      "import": {
+        "types": "./dist/schedulers.d.ts",
+        "default": "./dist/schedulers.js"
+      },
+      "require": {
+        "types": "./dist/schedulers.d.ts",
+        "default": "./dist/schedulers.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "release": "pnpm build && changelogen --release --push && pnpm publish",
+    "test": "vitest --run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest --coverage"
+  },
+  "files": [
+    "dist/*",
+    "src",
+    "!src/__tests__"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/drenther/easy-sync.git",
+    "directory": "packages/batching"
+  },
+  "homepage": "https://github.com/drenther/easy-sync",
+  "author": {
+    "name": "Soumyajit Pathak",
+    "url": "https://github.com/drenther"
+  },
+  "keywords": [
+    "batching",
+    "request-batching",
+    "promise-batching",
+    "typescript",
+    "easy-sync",
+    "syng-engine",
+    "local-first",
+    "offline-first",
+    "sync"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@total-typescript/tsconfig": "1.0.4",
+    "@types/node": "24.3.0",
+    "@vitest/coverage-v8": "3.2.4",
+    "changelogen": "0.6.2",
+    "typescript": "5.9.2",
+    "vite": "7.1.4",
+    "vite-plugin-dts": "4.5.4",
+    "vitest": "3.2.4"
+  }
+}

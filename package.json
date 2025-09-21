@@ -4,17 +4,26 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "test": "turbo run test",
+    "format-and-lint": "biome check .",
+    "format-and-lint:fix": "biome check . --write",
+    "prepare": "husky install",
+    "release": "turbo run release"
   },
   "devDependencies": {
-    "prettier": "^3.6.2",
-    "turbo": "^2.5.6",
+    "@biomejs/biome": "2.2.2",
+    "@commitlint/cli": "19.8.1",
+    "@commitlint/config-conventional": "19.8.1",
+    "husky": "9.1.7",
+    "lint-staged": "16.1.5",
+    "turbo": "2.5.6",
     "typescript": "5.9.2"
   },
-  "packageManager": "pnpm@9.0.0",
+  "packageManager": "pnpm@10.17.0",
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": "pnpm format-and-lint:fix"
   }
 }
