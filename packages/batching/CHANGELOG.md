@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.0.0-0
+
+[compare changes](https://github.com/drenther/easy-sync/compare/v0.0.1-0...v1.0.0-0)
+
+### 🏡 Chore
+
+- **release:** V0.0.1-0 ([6dcac12](https://github.com/drenther/easy-sync/commit/6dcac12))
+
+### ❤️ Contributors
+
+- Drenther ([@drenther](https://github.com/drenther))
+
 ## v0.0.1-0
 
 [compare changes](https://github.com/drenther/easy-sync/compare/v0.0.1-0...v0.0.1-0)
