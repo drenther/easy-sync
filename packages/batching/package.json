@@ -72,7 +72,7 @@
     "promise-batching",
     "typescript",
     "easy-sync",
-    "syng-engine",
+    "sync-engine",
     "local-first",
     "offline-first",
     "sync"

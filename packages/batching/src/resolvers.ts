@@ -1,4 +1,9 @@
-export type RequestResolver<Payload, Id, CombinedResponse, Result> = (
+export type RequestResolver<
+  CombinedResponse,
+  Result,
+  Id = undefined,
+  Payload = undefined,
+> = (
   combinedResponse: CombinedResponse,
   request: { id: Id; payload: Payload },
 ) => Result;
@@ -16,14 +21,14 @@ export type RequestResolver<Payload, Id, CombinedResponse, Result> = (
  * Can be used to access the result from Object or Map where the key is the `Id` of the request.
  */
 export function createKeyResolver<
-  Payload,
-  Id extends string | number | symbol,
   Result,
+  Id extends string | number | symbol,
+  Payload = undefined,
 >(): RequestResolver<
-  Payload,
-  Id,
   Record<Id, Result> | Map<Id, Result>,
-  Result
+  Result,
+  Id,
+  Payload
 > {
   return (combinedResponse, request) => {
     const idKey = request.id;
@@ -49,10 +54,10 @@ export function createKeyResolver<
  * Can be used to access the result from Array where the index is the `Id` of the request.
  */
 export function createArrayIndexResolver<
-  Payload,
-  Id extends number,
   Result,
->(): RequestResolver<Payload, Id, Array<Result>, Result> {
+  Id extends number,
+  Payload = undefined,
+>(): RequestResolver<Array<Result>, Result, Id, Payload> {
   return (combinedResponse, request) => {
     const idKey = request.id;
     const value = combinedResponse[idKey] as Result;
@@ -72,10 +77,10 @@ export function createArrayIndexResolver<
  * @param key - The key to be used to match the request id with the key of the result object
  */
 export function createArrayFindResolver<
-  Payload,
-  Id extends string | number | symbol,
   Result,
->(key: Id): RequestResolver<Payload, Id, Array<Result>, Result> {
+  Id extends string | number | symbol,
+  Payload = undefined,
+>(key: Id): RequestResolver<Array<Result>, Result, Id, Payload> {
   return (combinedResponse, request) => {
     const idKey = request.id;
     const value = combinedResponse.find(

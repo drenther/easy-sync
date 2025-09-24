@@ -15,13 +15,13 @@ const batchManager = new BatchManager({
   // the batch processor function - it will be called with the list of requests
   // this is where you would write the logic to handle a batch of requests
   // for example, make a single API call to the server with a combined payload of all the batched requests
-  batchProcessor: async (requests) => {
+  processor: async (requests) => {
     return api.batchGet(requests);
   },
   // the request resolver function - it will be called with the combined response and the requests that were batched together
   // this is where you would write the logic to extract the result for each request from the combined response
   // for example, if you are using a key resolver, you could map each key -> value pair in the combined response to the request that made that call where key = id of the request
-  requestResolver: createKeyResolver(),
+  resolver: createKeyResolver(),
   // the scheduler function - it will be called with the first request time, the last request time, and the number of requests in the batch
   scheduler: createFixedWindowScheduler(20_000), // Optional - Default - 10 seconds fixed window scheduler
 });

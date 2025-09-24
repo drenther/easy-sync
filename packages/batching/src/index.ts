@@ -1,11 +1,15 @@
 import type { RequestResolver } from './resolvers';
 import { createFixedWindowScheduler, type Scheduler } from './schedulers';
 
-export type BatchProcessor<Payload, Id, CombinedResponse> = (
+export type BatchProcessor<
+  CombinedResponse,
+  Id = undefined,
+  Payload = undefined,
+> = (
   requests: Array<{ id: Id; payload: Payload }>,
 ) => Promise<CombinedResponse>;
 
-export type RequestId = string | number | symbol;
+export type RequestId = string | number | symbol | undefined;
 
 export interface BatchRequestHandle<Id, Result> extends Promise<Result> {
   /** The id of this request (possibly auto-generated if not provided) */
@@ -26,13 +30,13 @@ type Timer = ReturnType<typeof setTimeout>;
 
 // The BatchManager class
 export class BatchManager<
-  Payload,
-  Id extends RequestId,
   CombinedResponse,
   Result,
+  Id extends RequestId = undefined,
+  Payload = undefined,
 > {
-  private processor: BatchProcessor<Payload, Id, CombinedResponse>;
-  private resolver: RequestResolver<Payload, Id, CombinedResponse, Result>;
+  private processor: BatchProcessor<CombinedResponse, Id, Payload>;
+  private resolver: RequestResolver<CombinedResponse, Result, Id, Payload>;
   private scheduler: Scheduler;
 
   // Map of pending unique requests (by id) to their grouped entry
@@ -55,8 +59,8 @@ export class BatchManager<
   private timer: Timer | null = null; // handle for scheduled batch (from setTimeout)
 
   constructor(options: {
-    processor: BatchProcessor<Payload, Id, CombinedResponse>;
-    resolver: RequestResolver<Payload, Id, CombinedResponse, Result>;
+    processor: BatchProcessor<CombinedResponse, Id, Payload>;
+    resolver: RequestResolver<CombinedResponse, Result, Id, Payload>;
     scheduler?: Scheduler;
   }) {
     this.processor = options.processor;
@@ -74,12 +78,12 @@ export class BatchManager<
     signal?: AbortSignal,
   ): BatchRequestHandle<Id, Result> {
     // Determine request id (use provided or generate unique)
-    let reqId: Id;
+    let reqId: NonNullable<Id>;
     if (typeof request === 'object') {
       // If an id is provided, use it, otherwise generate a unique Symbol
-      reqId = request.id ?? (Symbol() as unknown as Id);
+      reqId = request.id ?? (Symbol() as unknown as Id as NonNullable<Id>);
     } else {
-      reqId = request;
+      reqId = request as NonNullable<Id>;
     }
 
     // Determine request payload (use provided or undefined)
