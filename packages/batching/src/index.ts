@@ -73,10 +73,10 @@ export class BatchManager<
    * Enqueue a new request into the batch. Returns a promise handle that can be awaited for the result,
    * with a cancel() method and id property for cancellation or reference.
    */
-  enqueue(
+  enqueue = (
     request: Id | { payload: Payload; id?: Id },
     signal?: AbortSignal,
-  ): BatchRequestHandle<Id, Result> {
+  ): BatchRequestHandle<Id, Result> => {
     // Determine request id (use provided or generate unique)
     let reqId: NonNullable<Id>;
     if (typeof request === 'object') {
@@ -123,7 +123,7 @@ export class BatchManager<
 
     this.manageTimersAndScheduler();
     return handle;
-  }
+  };
 
   /**
    * Cancel a pending request or the entire batch.
@@ -132,7 +132,7 @@ export class BatchManager<
    * Cancelling a request rejects its promise with a BatchCancellationError.
    * (Requests already being processed in a batch cannot be cancelled via this method.)
    */
-  cancel(id?: Id): void {
+  cancel = (id?: Id): void => {
     if (id === undefined) {
       // Cancel all pending requests
       for (const entry of this.pending.values()) {
@@ -162,7 +162,7 @@ export class BatchManager<
         this.resetCurrentBatch();
       }
     }
-  }
+  };
 
   /**
    * --Internal Helper--
@@ -175,7 +175,7 @@ export class BatchManager<
    * @param signal The signal
    * @returns The promise handle
    */
-  private createPromiseHandle(reqId: Id, signal?: AbortSignal) {
+  private createPromiseHandle = (reqId: Id, signal?: AbortSignal) => {
     let resolveFn!: (value: Result) => void;
     let rejectFn!: (reason?: unknown) => void;
     const promise = new Promise<Result>((res, rej) => {
@@ -231,7 +231,7 @@ export class BatchManager<
       }
     }
     return { promise, resolve: resolveFn, reject: rejectFn, handle };
-  }
+  };
 
   /**
    * --Internal Helper--
@@ -239,7 +239,7 @@ export class BatchManager<
    *
    * @param options { firstRequestTime: number }
    */
-  private manageTimersAndScheduler(): void {
+  private manageTimersAndScheduler = (): void => {
     const now = Date.now();
     // Update firstRequestTime if not already set
     this.firstRequestTime = this.firstRequestTime ?? now;
@@ -257,35 +257,35 @@ export class BatchManager<
     // Clear any existing timer and set a new one
     this.clearExistingTimer();
     this.timer = setTimeout(this.triggerBatch, Math.max(0, delay));
-  }
+  };
 
   /**
    * --Internal Helper--
    * Clear any existing timer
    */
-  private clearExistingTimer(): void {
+  private clearExistingTimer = (): void => {
     if (this.timer) {
       clearTimeout(this.timer);
       this.timer = null;
     }
-  }
+  };
 
   /**
    * --Internal Helper--
    * Reset the current batch
    */
-  private resetCurrentBatch(): void {
+  private resetCurrentBatch = (): void => {
     this.pending.clear();
     this.clearExistingTimer();
     this.firstRequestTime = null;
     this.lastRequestTime = null;
-  }
+  };
 
   /**
    * --Internal Helper--
    * Trigger the batch execution
    */
-  private async triggerBatch(): Promise<void> {
+  private triggerBatch = async (): Promise<void> => {
     const currentBatchEntries = Array.from(this.pending.values());
     this.resetCurrentBatch();
 
@@ -340,5 +340,5 @@ export class BatchManager<
         }
       }
     }
-  }
+  };
 }
