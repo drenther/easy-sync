@@ -1,6 +1,6 @@
 {
   "name": "@easy-sync/batching",
-  "version": "1.0.0-0",
+  "version": "1.0.0",
   "private": false,
   "publishConfig": {
     "access": "public"
@@ -46,7 +46,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "release": "pnpm build && changelogen --premajor --release --push && pnpm publish",
+    "release": "pnpm build && changelogen --patch --release --push && pnpm publish",
     "test": "vitest --run",
     "test:watch": "vitest",
     "test:coverage": "vitest --coverage"

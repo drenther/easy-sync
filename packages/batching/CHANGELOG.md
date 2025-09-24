@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v1.0.0
+
+[compare changes](https://github.com/drenther/easy-sync/compare/v1.0.0-0...v1.0.0)
+
+### 🩹 Fixes
+
+- Types and docs ([7cc2b89](https://github.com/drenther/easy-sync/commit/7cc2b89))
+
+### 💅 Refactors
+
+- Use once for signal abort eventListener ([083629f](https://github.com/drenther/easy-sync/commit/083629f))
+
+### 🏡 Chore
+
+- Update root readme ([1957d84](https://github.com/drenther/easy-sync/commit/1957d84))
+
+### ❤️ Contributors
+
+- Drenther ([@drenther](https://github.com/drenther))
+
 ## v1.0.0-0
 
 [compare changes](https://github.com/drenther/easy-sync/compare/v0.0.1-0...v1.0.0-0)
