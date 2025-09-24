@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.2.0-0
+
+[compare changes](https://github.com/drenther/easy-sync/compare/v1.1.0-0...v1.2.0-0)
+
+### 🩹 Fixes
+
+- This binding for internal methods ([c5bd025](https://github.com/drenther/easy-sync/commit/c5bd025))
+
+### ✅ Tests
+
+- Write tests ([285ac50](https://github.com/drenther/easy-sync/commit/285ac50))
+
+### ❤️ Contributors
+
+- Drenther ([@drenther](https://github.com/drenther))
+
 ## v1.1.0-0
 
 [compare changes](https://github.com/drenther/easy-sync/compare/v1.0.0-0...v1.1.0-0)
