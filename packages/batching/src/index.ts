@@ -215,13 +215,15 @@ export class BatchManager<
         handle.cancel(signal.reason);
       } else {
         // otherwise, add a listener to the signal
-        function handleAbort() {
-          if (signal) {
-            handle.cancel(signal.reason);
-            signal.removeEventListener('abort', handleAbort);
-          }
-        }
-        signal.addEventListener('abort', handleAbort);
+        signal.addEventListener(
+          'abort',
+          () => {
+            if (signal) {
+              handle.cancel(signal.reason);
+            }
+          },
+          { once: true },
+        );
       }
     }
     return { promise, resolve: resolveFn, reject: rejectFn, handle };
